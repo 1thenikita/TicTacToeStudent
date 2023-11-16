@@ -1,0 +1,501 @@
+@page "/tictactoe"
+@using TicTacToeStudent.Shared.Model
+@using MudExtensions.Enums
+
+<MudGrid>
+    <MudItem xs="12">
+        <MudText Typo="Typo.h3">Крестики нолики 2.0</MudText>
+    </MudItem>
+    <MudItem sm="6">
+        <MudTextField T="string"
+                      Label="Игрок 1"
+                      @bind-Value="player1"/>
+
+    </MudItem>
+    <MudItem sm="6">
+        <MudGrid>
+            <MudItem>
+                @if (!playWithAI)
+                {
+                        @* Player 2: *@
+                    <MudTextField T="string"
+                                  Label="Игрок 2"
+                                  @bind-Value="player2"/>
+                }
+                else
+                {
+                    <MudAutocomplete T="AIDifficulty" SearchFunc="SearchFunc" Label="Сложность AI" @bind-Value="aiDifficulty"/>
+                }
+            </MudItem>
+            <MudItem>
+                <MudCheckBox T="bool" Label="With AI?" @bind-Checked="playWithAI"/>
+
+            </MudItem>
+        </MudGrid>
+
+    </MudItem>
+    <MudItem>
+        <MudNumericField T="int" Min="3" Max="15" @bind-Value="dimension" Label="Размер поля"/>
+    </MudItem>
+    <MudItem xs="12">
+        <MudButton OnClick="StartGame" Color="Color.Success" StartIcon="@Icons.Material.Filled.Start">Начать игру!</MudButton>
+    </MudItem>
+    <MudItem xs="12">
+        <MudAnimate @ref="animate" Selector="#game-container" AnimationType="AnimationType.Blur" Value="5" Duration="0.5" Delay="0" IterationCount="1" AnimationTiming="AnimationTiming.EaseInOut" AnimationDirection="AnimationDirection.AlternateReverse" AnimationFillMode="AnimationFillMode.None"></MudAnimate>
+        @if (gameStarted)
+        {
+            <MudText>Играет @GetCurrentPlayer()</MudText>
+            <div class="game-container ma-2" id="game-container">
+                @for (int i = 0; i < dimension; i++)
+                {
+                    <div class="row pa-2">
+                        @for (int j = 0; j < dimension; j++)
+                        {
+                            var x = i;
+                            var y = j;
+                            <div class="cell pa-2 @(IsWinningCell(x, y) ? "winning-cell" : "") @($"{x}{y}")" id="@($"{x}{y}")" x="@i" y="@j" @onclick="async () => { Console.WriteLine(x);Console.WriteLine(y);; await HandleClick(x, y); }">
+                                @GetBoard(x,y)
+                            </div>
+                            @* <div class="cell" x="@i" y="@j" @onclick="() => { Console.WriteLine(x);Console.WriteLine(y); HandleClick(x, y);  }"> *@
+                            @*     @board[x, y] *@
+                            @* </div> *@
+                        }
+                    </div>
+                }
+            </div>
+        }
+    </MudItem>
+</MudGrid>
+
+@* Player 1: *@
+
+
+@code {
+
+    private string GetBoard(int x, int y)
+    {
+        try
+        {
+            return board[x, y];
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return "";
+        }
+    }
+
+    private bool IsWinningCell(int row, int col)
+    {
+        return winningLine.Contains((row, col));
+    }
+
+    private List<(int, int)> winningLine = new List<(int, int)>();
+
+
+    private AIDifficulty aiDifficulty = AIDifficulty.Easy;
+    private bool playWithAI = false;
+    MudAnimate animate;
+
+    private string player1, player2;
+    private int dimension = 3;
+    private bool gameStarted = false;
+    private int turn = 0;
+    private bool gameOver = false;
+    private string[,] board;
+    private string lastPlayer = "";
+
+    private async Task StartGame()
+    {
+        winningLine = new();
+        if (string.IsNullOrWhiteSpace(player1))
+        {
+            Snackbar.Add("Укажите своё имя!", Severity.Error);
+            return; // Или показать предупреждение
+        }
+
+        if (!playWithAI)
+        {
+            if (string.IsNullOrWhiteSpace(player2))
+            {
+                Snackbar.Add("Укажите имя противника!", Severity.Error);
+                return;
+            }
+        }
+        else
+        {
+            player2 = "AI";
+        }
+    // playWithAI = string.IsNullOrWhiteSpace(player2);
+
+        board = new string[dimension, dimension];
+        gameStarted = true;
+        turn = 0;
+        gameOver = false;
+
+        if (playWithAI && turn % 2 == 1)
+        {
+            await AITurn();
+        }
+    }
+
+    private async Task AITurn()
+    {
+        switch (aiDifficulty)
+        {
+            case AIDifficulty.Easy:
+                await EasyAITurn();
+                break;
+            case AIDifficulty.Medium:
+                await MediumAITurn();
+                break;
+            case AIDifficulty.Hard:
+                await HardAITurn();
+                break;
+        }
+
+        CheckGameStatus();
+    }
+
+    private async Task EasyAITurn()
+    {
+        var move = FindRandomMove();
+        if (move.HasValue)
+        {
+            (int row, int col) = move.Value;
+            board[row, col] = "O";
+            turn++;
+        }
+    }
+
+    private async Task MediumAITurn()
+    {
+        var winMove = FindWinningMove("O");
+        var blockMove = FindWinningMove("X");
+
+        var move = winMove ?? blockMove ?? FindRandomMove();
+        if (move.HasValue)
+        {
+            (int row, int col) = move.Value;
+            board[row, col] = "O";
+            turn++;
+        }
+    }
+
+    private async Task HardAITurn()
+    {
+        var bestScore = int.MinValue;
+        var bestMove = (row: -1, col: -1);
+
+        for (int i = 0; i < dimension; i++)
+        {
+            for (int j = 0; j < dimension; j++)
+            {
+                if (string.IsNullOrEmpty(board[i, j]))
+                {
+                    board[i, j] = "O";
+                    var score = await Minimax(false);
+                    board[i, j] = "";
+
+                    if (score > bestScore)
+                    {
+                        bestScore = score;
+                        bestMove = (i, j);
+                    }
+                }
+            }
+        }
+
+        if (bestMove.row != -1)
+        {
+            board[bestMove.row, bestMove.col] = "O";
+            turn++;
+        }
+    }
+
+    private async Task<int> Minimax(bool isMaximizing)
+    {
+        var (winner, line) = CheckForWinner();
+
+        if (winner)
+            return isMaximizing ? -1 : 1;
+
+        if (IsBoardFull())
+            return 0;
+
+        var bestScore = isMaximizing ? int.MinValue : int.MaxValue;
+
+        for (int i = 0; i < dimension; i++)
+        {
+            for (int j = 0; j < dimension; j++)
+            {
+                if (string.IsNullOrEmpty(board[i, j]))
+                {
+                    board[i, j] = isMaximizing ? "O" : "X";
+                    var score = await Minimax(!isMaximizing);
+                    board[i, j] = "";
+
+                    bestScore = isMaximizing ? Math.Max(score, bestScore) : Math.Min(score, bestScore);
+                }
+            }
+        }
+
+        return bestScore;
+    }
+
+    private bool IsBoardFull()
+    {
+        for (int i = 0; i < dimension; i++)
+            for (int j = 0; j < dimension; j++)
+                if (string.IsNullOrEmpty(board[i, j]))
+                    return false;
+
+        return true;
+    }
+
+    private (int, int)? FindBestMove()
+    {
+    // Проверка возможности выигрыша AI
+        var winMove = FindWinningMove("O");
+        if (winMove.HasValue)
+            return winMove;
+
+    // Попытка блокировать ход игрока
+        var blockMove = FindWinningMove("X");
+        if (blockMove.HasValue)
+            return blockMove;
+
+    // Если нет ни выигрышных, ни блокирующих ходов, выбирается случайный ход
+        return FindRandomMove();
+    }
+
+    private (int, int)? FindWinningMove(string playerSymbol)
+    {
+        for (int i = 0; i < dimension; i++)
+        {
+            for (int j = 0; j < dimension; j++)
+            {
+                if (string.IsNullOrEmpty(board[i, j]))
+                {
+                    board[i, j] = playerSymbol;
+                    var (winner, line) = CheckForWinner();
+                    bool winningMove = winner;
+                    board[i, j] = ""; // Откат хода
+                    if (winningMove)
+                        return (i, j);
+                }
+            }
+        }
+        return null;
+    }
+
+    private (int, int)? FindRandomMove()
+    {
+        Random random = new Random();
+        List<(int, int)> availableCells = new List<(int, int)>();
+
+        for (int i = 0; i < dimension; i++)
+        {
+            for (int j = 0; j < dimension; j++)
+            {
+                if (string.IsNullOrEmpty(board[i, j]))
+                {
+                    availableCells.Add((i, j));
+                }
+            }
+        }
+
+        if (availableCells.Count > 0)
+        {
+            return availableCells[random.Next(availableCells.Count)];
+        }
+
+        return null;
+    }
+
+    private void CheckGameStatus()
+    {
+        var (winner, line) = CheckForWinner();
+        if (winner)
+        {
+            gameOver = true;
+            winningLine = line; // Сохраняем победную линию
+
+            if (playWithAI && turn % 2 == 0) // Проверяем, выиграл ли игрок или AI
+            {
+                Snackbar.Add($"Победил {lastPlayer}", Severity.Error);
+    // losses++;
+            }
+            else
+            {
+                Snackbar.Add($"Победил {lastPlayer}", Severity.Success);
+    // wins++;
+            }
+
+    // Показать сообщение о победе
+        }
+        else if (IsBoardFull())
+        {
+            gameOver = true;
+    // draws++;
+            Snackbar.Add($"Победила дружба");
+
+    // Показать сообщение о ничьей
+        }
+    }
+
+    [Inject]
+    public ISnackbar Snackbar { get; set; }
+
+    private async Task HandleClick(int i, int j)
+    {
+        if (!string.IsNullOrEmpty(board[i, j]) || gameOver)
+        {
+            return;
+        }
+
+        board[i, j] = turn % 2 == 0 ? "X" : "O"; // Предполагаем, что игрок всегда играет за "X"
+        turn++;
+
+        var (winner, line) = CheckForWinner();
+
+        if (winner)
+        {
+            gameOver = true;
+            Snackbar.Add($"Победил {lastPlayer}");
+    // Показать сообщение о победе
+        }
+        else if (turn == dimension * dimension)
+        {
+            gameOver = true;
+            Snackbar.Add($"Победила дружба");
+    // Показать сообщение о ничьей
+        }
+
+        if (!gameOver && playWithAI && turn % 2 == 1)
+        {
+            AITurn();
+        }
+
+        animate.Selector = $"#{i}{j}";
+        StateHasChanged();
+        await animate.Refresh();
+    }
+
+    private (bool, List<(int, int)>) CheckForWinner()
+    {
+        GetCurrentPlayer();
+
+    // Проверка строк
+        for (int i = 0; i < dimension; i++)
+        {
+            if (!string.IsNullOrEmpty(board[i, 0]))
+            {
+                bool rowWin = true;
+                for (int j = 1; j < dimension; j++)
+                {
+                    if (board[i, j] != board[i, 0])
+                    {
+                        rowWin = false;
+                        break;
+                    }
+                }
+                if (rowWin)
+                {
+                    winningLine = new();
+
+                    for (int j = 0; j < dimension; j++) winningLine.Add((i, j));
+                    StateHasChanged();
+                    return (true, winningLine);
+                }
+            }
+        }
+
+    // Проверка столбцов
+        for (int j = 0; j < dimension; j++)
+        {
+            if (!string.IsNullOrEmpty(board[0, j]))
+            {
+                bool colWin = true;
+                for (int i = 1; i < dimension; i++)
+                {
+                    if (board[i, j] != board[0, j])
+                    {
+                        colWin = false;
+                        break;
+                    }
+                }
+                if (colWin)
+                {
+                    winningLine = new();
+
+                    for (int i = 0; i < dimension; i++) winningLine.Add((i, j));
+                    StateHasChanged();
+                    return (true, winningLine);
+                }
+            }
+        }
+
+    // Проверка главной диагонали
+        if (!string.IsNullOrEmpty(board[0, 0]))
+        {
+            bool diagWin = true;
+            for (int i = 1; i < dimension; i++)
+            {
+                if (board[i, i] != board[0, 0])
+                {
+                    diagWin = false;
+                    break;
+                }
+            }
+            if (diagWin)
+            {
+                winningLine = new();
+
+                for (int i = 0; i < dimension; i++) winningLine.Add((i, i));
+                StateHasChanged();
+                return (true, winningLine);
+            }
+        }
+
+    // Проверка побочной диагонали
+        if (!string.IsNullOrEmpty(board[0, dimension - 1]))
+        {
+            bool antiDiagWin = true;
+            for (int i = 1; i < dimension; i++)
+            {
+                if (board[i, dimension - i - 1] != board[0, dimension - 1])
+                {
+                    antiDiagWin = false;
+                    break;
+                }
+            }
+            if (antiDiagWin)
+            {
+                winningLine = new();
+
+                for (int i = 0; i < dimension; i++) winningLine.Add((i, dimension - i - 1));
+                StateHasChanged();
+                return (true, winningLine);
+            }
+        }
+        StateHasChanged();
+        return (false, new());
+    }
+
+
+    private string GetCurrentPlayer()
+    {
+        lastPlayer = (turn % 2 == 0 ? player2 : player1);
+        return turn % 2 == 0 ? player1 : player2;
+    }
+
+
+    private List<AIDifficulty> AiDifficulties = new(Enum.GetValues<AIDifficulty>());
+
+    private async Task<IEnumerable<AIDifficulty>> SearchFunc(string arg)
+    {
+        return AiDifficulties.Where(x => x.ToString().Contains(arg, StringComparison.OrdinalIgnoreCase));
+    }
+
+}

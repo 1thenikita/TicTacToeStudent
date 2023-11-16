@@ -1,0 +1,252 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/nik-801/Developer/Rider/TicTacToeStudent/Server/TicTacToeStudent.Server.csproj": {}
+  },
+  "projects": {
+    "/Users/nik-801/Developer/Rider/TicTacToeStudent/Client/TicTacToeStudent.Client.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/nik-801/Developer/Rider/TicTacToeStudent/Client/TicTacToeStudent.Client.csproj",
+        "projectName": "TicTacToeStudent.Client",
+        "projectPath": "/Users/nik-801/Developer/Rider/TicTacToeStudent/Client/TicTacToeStudent.Client.csproj",
+        "packagesPath": "/Users/nik-801/.nuget/packages/",
+        "outputPath": "/Users/nik-801/Developer/Rider/TicTacToeStudent/Client/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/nik-801/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "/usr/local/share/dotnet/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "/Users/nik-801/Developer/Rider/TicTacToeStudent/Shared/TicTacToeStudent.Shared.csproj": {
+                "projectPath": "/Users/nik-801/Developer/Rider/TicTacToeStudent/Shared/TicTacToeStudent.Shared.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "CodeBeam.MudBlazor.Extensions": {
+              "target": "Package",
+              "version": "[6.6.2, )"
+            },
+            "Microsoft.AspNetCore.Components.WebAssembly": {
+              "target": "Package",
+              "version": "[6.0.7, )"
+            },
+            "Microsoft.AspNetCore.Components.WebAssembly.DevServer": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.7, )"
+            },
+            "MudBlazor": {
+              "target": "Package",
+              "version": "[6.11.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[6.0.16, 6.0.16]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[6.0.16, 6.0.16]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Runtime.Mono.browser-wasm",
+              "version": "[6.0.16, 6.0.16]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.203/RuntimeIdentifierGraph.json"
+        }
+      },
+      "runtimes": {
+        "browser-wasm": {
+          "#import": []
+        }
+      }
+    },
+    "/Users/nik-801/Developer/Rider/TicTacToeStudent/Server/TicTacToeStudent.Server.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/nik-801/Developer/Rider/TicTacToeStudent/Server/TicTacToeStudent.Server.csproj",
+        "projectName": "TicTacToeStudent.Server",
+        "projectPath": "/Users/nik-801/Developer/Rider/TicTacToeStudent/Server/TicTacToeStudent.Server.csproj",
+        "packagesPath": "/Users/nik-801/.nuget/packages/",
+        "outputPath": "/Users/nik-801/Developer/Rider/TicTacToeStudent/Server/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/nik-801/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "/usr/local/share/dotnet/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "/Users/nik-801/Developer/Rider/TicTacToeStudent/Client/TicTacToeStudent.Client.csproj": {
+                "projectPath": "/Users/nik-801/Developer/Rider/TicTacToeStudent/Client/TicTacToeStudent.Client.csproj"
+              },
+              "/Users/nik-801/Developer/Rider/TicTacToeStudent/Shared/TicTacToeStudent.Shared.csproj": {
+                "projectPath": "/Users/nik-801/Developer/Rider/TicTacToeStudent/Shared/TicTacToeStudent.Shared.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Components.WebAssembly.Server": {
+              "target": "Package",
+              "version": "[6.0.7, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[6.0.16, 6.0.16]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.osx-arm64",
+              "version": "[6.0.16, 6.0.16]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[6.0.16, 6.0.16]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.203/RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/nik-801/Developer/Rider/TicTacToeStudent/Shared/TicTacToeStudent.Shared.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/nik-801/Developer/Rider/TicTacToeStudent/Shared/TicTacToeStudent.Shared.csproj",
+        "projectName": "TicTacToeStudent.Shared",
+        "projectPath": "/Users/nik-801/Developer/Rider/TicTacToeStudent/Shared/TicTacToeStudent.Shared.csproj",
+        "packagesPath": "/Users/nik-801/.nuget/packages/",
+        "outputPath": "/Users/nik-801/Developer/Rider/TicTacToeStudent/Shared/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/nik-801/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "/usr/local/share/dotnet/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[6.0.16, 6.0.16]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[6.0.16, 6.0.16]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.203/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

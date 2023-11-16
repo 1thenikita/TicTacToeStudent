@@ -1,0 +1,56 @@
+@page "/game"
+@using TicTacToeStudent.Shared.Model
+
+<h1>Tic Tac Toe</h1>
+
+@code {
+    GameBoard board = new GameBoard();
+
+    protected override async Task OnInitializedAsync()
+    {
+        board = new(5);
+    }
+}
+
+
+@if (!board.GameComplete)
+{
+    <h2>@board.CurrentTurn's Turn!</h2>
+}
+else
+{
+    <h2>
+        @board.GetGameCompleteMessage() <button class="btn btn-success" @onclick="@(() => board.Reset())">Reset</button>
+    </h2>
+}
+
+<MudGrid>
+    <MudItem xs="12">
+        <MudGrid>
+            @for (int i = 0; i <= (board.Count - 1); i++)
+            {
+                Console.WriteLine(i);
+                <MudItem xs="4">
+                    @for (int j = 0; j <= (board.Count - 1); j++)
+                    {
+                        int x = i;
+                        int y = j;
+
+                        var piece = @board.GetBoard(i, j);
+                        
+                        Console.WriteLine(j);
+                        <div class="gamepiece
+                    @piece?.Style.ToString().ToLower()"
+                             @onclick="@(() => {board.PieceClicked(x, y); StateHasChanged();})"
+                             style="@(board.IsGamePieceAWinningPiece(i, j) ? "opacity: 0.6" : "")">
+                        </div>
+                        Console.WriteLine("setted");
+                    }
+                </MudItem>
+            }
+        </MudGrid>
+    </MudItem>
+</MudGrid>
+<div class="board">
+
+</div>

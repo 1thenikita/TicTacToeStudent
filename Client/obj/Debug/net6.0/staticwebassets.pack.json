@@ -1,0 +1,65 @@
+{
+  "Files": [
+    {
+      "Id": "/Users/nik-801/Developer/Rider/TicTacToeStudent/Client/bin/Debug/net6.0/wwwroot/_framework/blazor.webassembly.js",
+      "PackagePath": "staticwebassets/_framework/blazor.webassembly.js"
+    },
+    {
+      "Id": "/Users/nik-801/Developer/Rider/TicTacToeStudent/Client/obj/Debug/net6.0/build-gz/odxknTCB.gz",
+      "PackagePath": "staticwebassets/_framework/blazor.webassembly.js.gz"
+    },
+    {
+      "Id": "/Users/nik-801/Developer/Rider/TicTacToeStudent/Client/wwwroot/favicon.ico",
+      "PackagePath": "staticwebassets/favicon.ico"
+    },
+    {
+      "Id": "/Users/nik-801/Developer/Rider/TicTacToeStudent/Client/wwwroot/icon-512.png",
+      "PackagePath": "staticwebassets/icon-512.png"
+    },
+    {
+      "Id": "/Users/nik-801/Developer/Rider/TicTacToeStudent/Client/wwwroot/index.html",
+      "PackagePath": "staticwebassets/index.html"
+    },
+    {
+      "Id": "/Users/nik-801/Developer/Rider/TicTacToeStudent/Client/wwwroot/letter-o.png",
+      "PackagePath": "staticwebassets/letter-o.png"
+    },
+    {
+      "Id": "/Users/nik-801/Developer/Rider/TicTacToeStudent/Client/wwwroot/letter-x.png",
+      "PackagePath": "staticwebassets/letter-x.png"
+    },
+    {
+      "Id": "/Users/nik-801/Developer/Rider/TicTacToeStudent/Client/wwwroot/manifest.json",
+      "PackagePath": "staticwebassets/manifest.json"
+    },
+    {
+      "Id": "/Users/nik-801/Developer/Rider/TicTacToeStudent/Client/wwwroot/service-worker.js",
+      "PackagePath": "staticwebassets/service-worker.js"
+    },
+    {
+      "Id": "/Users/nik-801/Developer/Rider/TicTacToeStudent/Client/wwwroot/service-worker.published.js",
+      "PackagePath": "staticwebassets/service-worker.published.js"
+    },
+    {
+      "Id": "/Users/nik-801/Developer/Rider/TicTacToeStudent/Client/wwwroot/style.css",
+      "PackagePath": "staticwebassets/style.css"
+    },
+    {
+      "Id": "obj/Debug/net6.0/staticwebassets/msbuild.TicTacToeStudent.Client.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj/Debug/net6.0/staticwebassets/msbuild.build.TicTacToeStudent.Client.props",
+      "PackagePath": "build\\TicTacToeStudent.Client.props"
+    },
+    {
+      "Id": "obj/Debug/net6.0/staticwebassets/msbuild.buildMultiTargeting.TicTacToeStudent.Client.props",
+      "PackagePath": "buildMultiTargeting\\TicTacToeStudent.Client.props"
+    },
+    {
+      "Id": "obj/Debug/net6.0/staticwebassets/msbuild.buildTransitive.TicTacToeStudent.Client.props",
+      "PackagePath": "buildTransitive\\TicTacToeStudent.Client.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

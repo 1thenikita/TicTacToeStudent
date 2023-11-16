@@ -1,0 +1,12 @@
+/Users/nik-801/Developer/Rider/TicTacToeStudent/Shared/bin/Debug/net6.0/TicTacToeStudent.Shared.deps.json
+/Users/nik-801/Developer/Rider/TicTacToeStudent/Shared/bin/Debug/net6.0/TicTacToeStudent.Shared.dll
+/Users/nik-801/Developer/Rider/TicTacToeStudent/Shared/bin/Debug/net6.0/TicTacToeStudent.Shared.pdb
+/Users/nik-801/Developer/Rider/TicTacToeStudent/Shared/obj/Debug/net6.0/TicTacToeStudent.Shared.csproj.AssemblyReference.cache
+/Users/nik-801/Developer/Rider/TicTacToeStudent/Shared/obj/Debug/net6.0/TicTacToeStudent.Shared.GeneratedMSBuildEditorConfig.editorconfig
+/Users/nik-801/Developer/Rider/TicTacToeStudent/Shared/obj/Debug/net6.0/TicTacToeStudent.Shared.AssemblyInfoInputs.cache
+/Users/nik-801/Developer/Rider/TicTacToeStudent/Shared/obj/Debug/net6.0/TicTacToeStudent.Shared.AssemblyInfo.cs
+/Users/nik-801/Developer/Rider/TicTacToeStudent/Shared/obj/Debug/net6.0/TicTacToeStudent.Shared.csproj.CoreCompileInputs.cache
+/Users/nik-801/Developer/Rider/TicTacToeStudent/Shared/obj/Debug/net6.0/TicTacToeStudent.Shared.dll
+/Users/nik-801/Developer/Rider/TicTacToeStudent/Shared/obj/Debug/net6.0/refint/TicTacToeStudent.Shared.dll
+/Users/nik-801/Developer/Rider/TicTacToeStudent/Shared/obj/Debug/net6.0/TicTacToeStudent.Shared.pdb
+/Users/nik-801/Developer/Rider/TicTacToeStudent/Shared/obj/Debug/net6.0/ref/TicTacToeStudent.Shared.dll

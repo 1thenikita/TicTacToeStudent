@@ -1,0 +1,48 @@
+.gamepiece {
+    border: solid 1px black;
+    min-height: 60px;
+    min-width: 60px;
+}
+
+.x {
+    background-image: url("./letter-x.png");
+    background-repeat:no-repeat;
+}
+
+.o {
+    background-image: url("./letter-o.png");
+    background-repeat: no-repeat;
+}
+
+#game-container {
+    margin: 10px 10px;
+    text-align: center;
+    border: black 2px solid;
+    border-radius: 16px;
+}
+
+.cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+    height: 50px;
+    width: 50px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.hide {
+    display: none;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.winning-cell {
+    /* Ваш стиль для выделения победной линии, например, изменение фона или границ */
+    background-color: green;
+}
